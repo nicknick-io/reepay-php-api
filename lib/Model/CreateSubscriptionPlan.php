@@ -414,6 +414,10 @@ class CreateSubscriptionPlan implements ArrayAccess
             $invalid_properties[] = "'version' cannot be null.";
         }
 
+        if ($this->container['version'] <= 0) {
+            $invalid_properties[] = "'version' has to be more than 0";
+        }
+
         if (!is_null($this->container['renewal_reminder_email_days']) && ($this->container['renewal_reminder_email_days'] < 1)) {
             $invalid_properties[] = "invalid value for 'renewal_reminder_email_days', must be bigger than or equal to 1.";
         }
