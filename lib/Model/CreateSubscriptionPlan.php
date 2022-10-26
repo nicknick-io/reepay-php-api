@@ -143,6 +143,7 @@ class CreateSubscriptionPlan implements ArrayAccess
         'quantity' => 'quantity',
         'prepaid' => 'prepaid',
         'handle' => 'handle',
+        "version" => 'version',
         'dunning_plan' => 'dunning_plan',
         'renewal_reminder_email_days' => 'renewal_reminder_email_days',
         'trial_reminder_email_days' => 'trial_reminder_email_days',
@@ -180,6 +181,7 @@ class CreateSubscriptionPlan implements ArrayAccess
         'quantity' => 'setQuantity',
         'prepaid' => 'setPrepaid',
         'handle' => 'setHandle',
+        'version' => 'setVersion',
         'dunning_plan' => 'setDunningPlan',
         'renewal_reminder_email_days' => 'setRenewalReminderEmailDays',
         'trial_reminder_email_days' => 'setTrialReminderEmailDays',
@@ -217,6 +219,7 @@ class CreateSubscriptionPlan implements ArrayAccess
         'quantity' => 'getQuantity',
         'prepaid' => 'getPrepaid',
         'handle' => 'getHandle',
+        'version' => 'getVersion',
         'dunning_plan' => 'getDunningPlan',
         'renewal_reminder_email_days' => 'getRenewalReminderEmailDays',
         'trial_reminder_email_days' => 'getTrialReminderEmailDays',
@@ -347,6 +350,7 @@ class CreateSubscriptionPlan implements ArrayAccess
         $this->container['quantity'] = isset($data['quantity']) ? $data['quantity'] : null;
         $this->container['prepaid'] = isset($data['prepaid']) ? $data['prepaid'] : null;
         $this->container['handle'] = isset($data['handle']) ? $data['handle'] : null;
+        $this->container['version'] = isset($data['version']) ? $data['version'] : null;
         $this->container['dunning_plan'] = isset($data['dunning_plan']) ? $data['dunning_plan'] : null;
         $this->container['renewal_reminder_email_days'] = isset($data['renewal_reminder_email_days']) ? $data['renewal_reminder_email_days'] : null;
         $this->container['trial_reminder_email_days'] = isset($data['trial_reminder_email_days']) ? $data['trial_reminder_email_days'] : null;
@@ -405,6 +409,11 @@ class CreateSubscriptionPlan implements ArrayAccess
         if ($this->container['handle'] === null) {
             $invalid_properties[] = "'handle' can't be null";
         }
+
+        if ($this->container['version'] === null) {
+            $invalid_properties[] = "'version' cannot be null.";
+        }
+
         if (!is_null($this->container['renewal_reminder_email_days']) && ($this->container['renewal_reminder_email_days'] < 1)) {
             $invalid_properties[] = "invalid value for 'renewal_reminder_email_days', must be bigger than or equal to 1.";
         }
@@ -526,6 +535,9 @@ class CreateSubscriptionPlan implements ArrayAccess
             return false;
         }
         if ($this->container['handle'] === null) {
+            return false;
+        }
+        if ($this->container['version'] < 0) {
             return false;
         }
         if ($this->container['renewal_reminder_email_days'] < 1) {
@@ -747,6 +759,15 @@ class CreateSubscriptionPlan implements ArrayAccess
     }
 
     /**
+     * Gets version
+     * @return int
+     */
+    public function getVersion()
+    {
+        return $this->container['version'];
+    }
+
+    /**
      * Sets handle
      * @param string $handle Per account unique handle for the subscription plan. Max length 255 with allowable characters [a-zA-Z0-9_.-@].
      * @return $this
@@ -754,6 +775,18 @@ class CreateSubscriptionPlan implements ArrayAccess
     public function setHandle($handle)
     {
         $this->container['handle'] = $handle;
+
+        return $this;
+    }
+
+    /**
+     * Sets handle
+     * @param $version Plan version
+     * @return $this
+     */
+    public function setVersion($version)
+    {
+        $this->container['version'] = $version;
 
         return $this;
     }
